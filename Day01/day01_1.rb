@@ -4,11 +4,16 @@
 # AUTHOR::  Kyle Mullins
 ##
 
-def solve(input)
-  (input[0..-1] + input[0..0]).chars.chunk_while { |a, b| a == b }
-                              .select { |run| run.length > 1 }
-                              .map { |run| run.first.to_i * (run.length - 1) }
-                              .reduce { |sum, run_total| sum + run_total }
+def process_input(input_lines)
+  first_line = input_lines.first.chomp
+  (first_line[0..-1] + first_line[0..0]).chars
 end
 
-puts solve(open(ARGV.shift).readline.chomp)
+def solve(input)
+  input.chunk_while { |a, b| a == b }
+       .select { |run| run.length > 1 }
+       .map { |run| run.first.to_i * (run.length - 1) }
+       .reduce { |sum, run_total| sum + run_total }
+end
+
+puts solve(process_input(open(ARGV.shift).readlines))

@@ -13,5 +13,3 @@ def solve(input)
   input.select.with_index { |digit, i| digit == input[(i + distance) % input.length] }
        .map(&:to_i).reduce { |sum, digit| sum + digit }
 end
-
-puts solve(process_input(open(ARGV.shift).readlines))

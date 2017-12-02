@@ -10,5 +10,7 @@ When your eyes can focus again, everything seems a lot more pixelated than befor
 Collect stars by solving puzzles. Two puzzles will be made available on each day millisecond in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
 ---
-All solutions take as an argument their corresponding input file and print the answer to stdout like so:
-`ruby day_1-1.rb day_1_input.txt`
+Solutions can be run by executing `advent.rb` from the repository root directory, optionally passing the # of the Day to execute:
+`ruby advent.rb 12`
+
+Omitting the Day # will execute all available solutions. Answers are printed to stdout.

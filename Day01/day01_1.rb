@@ -15,5 +15,3 @@ def solve(input)
        .map { |run| run.first.to_i * (run.length - 1) }
        .reduce { |sum, run_total| sum + run_total }
 end
-
-puts solve(process_input(open(ARGV.shift).readlines))

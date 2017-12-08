@@ -13,11 +13,15 @@ def solve(input)
   step_count = 0
 
   while cur_index.between?(0, input.length - 1)
-    next_index = cur_index + input[cur_index]
-    input[cur_index] += 1
-    cur_index = next_index
+    cur_index = jump_instruction(input, cur_index)
     step_count += 1
   end
 
   step_count
+end
+
+def jump_instruction(instructions, cur_index)
+  next_index = cur_index + instructions[cur_index]
+  instructions[cur_index] += 1
+  next_index
 end

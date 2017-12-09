@@ -4,50 +4,89 @@
 # AUTHOR::  Kyle Mullins
 ##
 
+def format_day_num(day_num)
+  format('%02i', day_num)
+end
+
+def day_exists?(day_num)
+  day_str = format_day_num(day_num)
+  day_folder = "Day#{day_str}"
+  input_file = "#{day_folder}/day#{day_str}.input"
+
+  Dir.exist?(day_folder) && File.exist?(input_file)
+end
+
+def part_exists?(day_num, part_num)
+  day_str = format_day_num(day_num)
+  part_file = "Day#{day_str}/day#{day_str}_#{part_num}.rb"
+
+  File.exist?(part_file)
+end
+
+def run_day(day_num)
+  day_str = format_day_num(day_num)
+  input_file = "Day#{day_str}/day#{day_str}.input"
+  input_lines = open(input_file).readlines
+
+  puts "Day #{day_num}\n------"
+
+  (1..2).each do |part|
+    run_day_part(day_num, part, input_lines) if part_exists?(day_num, part)
+  end
+end
+
+def run_day_part(day_num, part_num, input_lines)
+  day_str = format_day_num(day_num)
+  part_file = "Day#{day_str}/day#{day_str}_#{part_num}.rb"
+
+  puts "  Part #{part_num}"
+  # noinspection RubyResolve
+  load part_file
+
+  puts "  -> #{solve(process_input(input_lines))}\n\n"
+end
+
+def run_single_day(day_num)
+  unless day_num.between?(1, 25)
+    puts 'Day # must be a number between 1 and 25'
+    exit(1)
+  end
+
+  unless day_exists?(day_num)
+    puts "Day #{day_num} doesn't exist yet"
+    exit(2)
+  end
+
+  run_day(day_num)
+end
+
+def run_latest_day
+  latest_day = (1..25).to_a.reverse.find { |day_num| day_exists?(day_num) }
+
+  if latest_day.nil?
+    puts 'There are no Days yet'
+    exit(3)
+  end
+
+  run_day(latest_day)
+end
+
+# MAIN
 unless ARGV.empty? || ARGV.length == 1
-  puts 'Usage: ruby advent.rb [Day #]'
+  puts 'Usage: ruby advent.rb [Day #|latest]'
   exit(1)
 end
 
 if ARGV.length == 1
-  begin
-    err = false
-    day_num = Integer(ARGV.first)
-
-    err = true unless day_num.between?(1, 25)
-  rescue StandardError => e
-    puts e.class
-    err = true
-  ensure
-    if err
-      puts 'Day # must be a number between 1 and 25'
-      exit(1)
-    end
+  if ARGV.first.casecmp('latest').zero?
+    run_latest_day
+  else
+    day_num = ARGV.first.to_i
+    run_single_day(day_num)
   end
-end
-
-days = (1..25).to_a
-days = [ARGV.first.to_i] if ARGV.length == 1
-
-days.each do |day|
-  day_folder = sprintf('Day%02i', day)
-  break unless Dir.exist?(day_folder)
-
-  puts "Day #{day}\n------"
-
-  path_preamble = day_folder + "/#{day_folder.downcase}"
-  input_path = path_preamble + '.input'
-  break unless File.exist?(input_path)
-
-  input_lines = open(input_path).readlines
-
-  (1..2).each do |part|
-    load_path = path_preamble + "_#{part}.rb"
-    break unless File.exist?(load_path)
-
-    puts "  Part #{part}"
-    load load_path
-
-    puts "  -> #{solve(process_input(input_lines))}\n\n"
+else
+  (1..25).each do |day|
+    break unless day_exists?(day)
+    run_day(day)
   end
 end

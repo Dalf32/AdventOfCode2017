@@ -1,15 +1,10 @@
 ##
-# day10_2.rb
+# knot_hash.rb
 #
 # AUTHOR::  Kyle Mullins
 ##
 
-def process_input(input_lines)
-  input_lines.first.chomp.chars.map(&:codepoints).map(&:first) +
-    [17, 31, 73, 47, 23]
-end
-
-def solve(input)
+def generate_hash(input)
   list_size = 256
   list = (0..(list_size - 1)).to_a
   position = 0

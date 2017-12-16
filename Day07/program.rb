@@ -1,6 +1,8 @@
+##
 # program.rb
 #
-# Author::  Kyle Mullins
+# AUTHOR::  Kyle Mullins
+##
 
 class Program
   attr_reader :name, :weight, :children, :parent

@@ -1,6 +1,8 @@
+##
 # generator.rb
 #
-# Author::  Kyle Mullins
+# AUTHOR::  Kyle Mullins
+##
 
 class Generator
   def initialize(start_val, factor, divisor, criteria = 1)

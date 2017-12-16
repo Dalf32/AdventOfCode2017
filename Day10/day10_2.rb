@@ -32,7 +32,7 @@ def twist_knot(list, position, length)
   sublist_overflow = sublist_end - list.length
 
   sublist = list[position..sublist_end]
-  sublist += list[0..sublist_overflow] unless sublist_overflow < 0
+  sublist += list[0..sublist_overflow] unless sublist_overflow.negative?
   sublist = sublist.reverse
 
   replace_sublist(list, position, sublist)

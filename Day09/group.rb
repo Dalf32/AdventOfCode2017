@@ -1,6 +1,8 @@
+##
 # group.rb
 #
-# Author::  Kyle Mullins
+# AUTHOR::  Kyle Mullins
+##
 
 class Group
   attr_reader :parent, :children
@@ -9,7 +11,7 @@ class Group
     @parent = parent
     @children = []
 
-    parent.add_child(self) unless parent.nil?
+    parent&.add_child(self)
   end
 
   def add_child(child)

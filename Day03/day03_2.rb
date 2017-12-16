@@ -31,13 +31,13 @@ end
 def gen_side(prev_layer, cur_layer, side_num, layer_size)
   prev_side = prev_layer[side_num]
   new_side = [0]
-  new_side = [cur_layer[side_num - 1][-1]] unless side_num - 1 < 0
+  new_side = [cur_layer[side_num - 1][-1]] unless (side_num - 1).negative?
 
-  prev_corner = side_num - 1 < 0 ? 0 : cur_layer[side_num - 1][-2]
+  prev_corner = (side_num - 1).negative? ? 0 : cur_layer[side_num - 1][-2]
   next_corner = side_num == 3 ? cur_layer[0][1] : 0
 
   (0..(layer_size - 2)).to_a.each do |i|
-    n1 = i - 1 < 0 ? prev_corner : prev_side[i - 1]
+    n1 = (i - 1).negative? ? prev_corner : prev_side[i - 1]
     n2 = i >= prev_side.length ? 0 : prev_side[i]
     n3 = i + 1 >= prev_side.length ? next_corner : prev_side[i + 1]
     new_side << new_side[i] + n1 + n2 + n3
